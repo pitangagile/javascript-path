@@ -7,6 +7,7 @@
 - [Sobre](#Sobre)
 - [Quero Aprender JS](#Quero-aprender-JS)
 - [Como contribuir](CONTRIBUTING.md)
+- [Exemplos](examples.md)
 
 ## Sobre
 
