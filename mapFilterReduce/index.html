@@ -1,0 +1,58 @@
+<html lang="en">
+
+<head>
+  <title>Map - Filter - Reduce</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="jumbotron text-center">
+    <h1>Map - Filter - Find - Reduce</h1>
+    <span>
+      Considerando que as cartas de baralho tem números, figuras e cores assumimos que para um determinado jogo
+      apenas as cartas que tem <strong>números</strong> são <strong>válidas</strong>, logo <strong>ASES(A), CORINGAS,
+        REIS(K), VALETES(J) e DAMAS(Q)</strong> são cartas <strong>inválidas</strong>, e serão desconsideradas pelo
+      jogador.
+    </span>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h4>Minhas Cartas</h4>
+        <button type="button" class="btn btn-primary" onclick="generateCards()">Pegar Cartas</button>
+        <div id="myCards" class="card-columns p-sm-2"></div>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-sm-6">
+        <h3>Map</h3>
+        <p>Análise das cartas em válidas e inválidas</p>
+        <div id="mappedCards"></div>
+      </div>
+      <div class="col-sm-6">
+        <h3>Filter</h3>
+        <p>Cartas separadas por naipes</p>
+        <div id="heartsCards"></div>
+        <div id="spadesCards"></div>
+        <div id="diamondsCards"></div>
+        <div id="clubsCards"></div>
+      </div>
+      <div class="col-sm-6">
+        <h3>Find</h3>
+        <div id="wildCard"></div>
+      </div>
+      <div class="col-sm-6">
+        <h3>Reduce</h3>
+        <div id="totalScore"></div>
+      </div>
+    </div>
+  </div>
+  <script src="cards.js"></script>
+</body>
+
+</html>
