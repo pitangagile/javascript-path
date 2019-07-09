@@ -28,19 +28,26 @@ Se você não vê sua ideia listada e acha que ela se encaixa nos objetivos dest
 
 	1.2. Caso não exista a categoria faça a sugestão da nova categoria na issue que você abriu;
 
-2. Crie um `.md` mínimo explicando o seu exemplo. Esse `.md` pode ser usado como descrição do seu PR. Veja um exemplo:
+2. Crie um `.md` mínimo explicando o seu exemplo. Esse `.md` pode ser usado como descrição do seu PR. [Veja um exemplo](_examples/contributing/contributingExample/contributingExample.md).
 
 	2.1 Este arquivo precisa ter os links para voltar para o `README.md` como link para o início e outro com o link para `examples.md` como link para voltar;
 
 	**Exemplo:**
 	```markdown
+	# Exemplos
+
 	[Início](../../../README.md) |
 	[Exemplos](../../../examples.md)
+	...
 	```
 
 2. Referencie o seu exemplo no `examples.md`
+	> [Veja na prática](examples.md)
 
 	**Exemplo:**
 	```markdown
+	## Categoria
+
 	* [Exemplo de Contribuição](_examples/contributing/contributingExample/contributingExample.md)
+	...
 	```
