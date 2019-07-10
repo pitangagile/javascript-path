@@ -24,13 +24,13 @@ Se você não vê sua ideia listada e acha que ela se encaixa nos objetivos dest
 
 1. Adicione seu exemplo como subpasta do diretório [`_examples`](https://github.com/pitangagile/javascript-path/tree/master/_examples);
 
-	1.1. Caso o seu exemplo pertença a alguma categoria adicione ele dentro da categoria;
+	1.1. Caso o seu exemplo pertença a alguma categoria, adicione ele dentro da categoria;
 
-	1.2. Caso não exista a categoria faça a sugestão da nova categoria na issue que você abriu;
+	1.2. Caso não exista a categoria, faça a sugestão da nova categoria na issue que você abriu;
 
 2. Crie um `.md` mínimo explicando o seu exemplo. Esse `.md` pode ser usado como descrição do seu PR. [Veja um exemplo](_examples/contributing/contributingExample/contributingExample.md).
 
-	2.1 Este arquivo precisa ter os links para voltar para o `README.md` como link para o início e outro com o link para `examples.md` como link para voltar;
+	2.1 Este arquivo precisa ter os links para voltar para o `README.md`, como link para o início, e outro com o link para `examples.md`, como link para voltar;
 
 	**Exemplo:**
 	```markdown
