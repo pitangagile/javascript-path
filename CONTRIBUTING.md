@@ -22,7 +22,7 @@ Se você não vê sua ideia listada e acha que ela se encaixa nos objetivos dest
 
 0. Abra uma issue explicando o que você vai fazer;
 
-1. Adicione seu exemplo como subpasta do diretório `_examples`;
+1. Adicione seu exemplo como subpasta do diretório [`_examples`](https://github.com/pitangagile/javascript-path/tree/master/_examples);
 
 	1.1. Caso o seu exemplo pertença a alguma categoria adicione ele dentro da categoria;
 
