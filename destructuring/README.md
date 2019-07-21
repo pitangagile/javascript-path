@@ -3,6 +3,6 @@ Disponível a partir do ES6 com o destructuring podemos quebrar estruturas compl
 Referência:
 https://codeburst.io/es6-destructuring-the-complete-guide-7f842d08b98f
 
-Uma vez instalado o Nodejs com o terminal apontando para o diretório do código, rode o seguinte comando para visualizar os exemplos:
+Uma vez instalado o Nodejs e com o terminal apontando para o diretório do código, rode o seguinte comando para visualizar os exemplos:
     node arrayDestructuring.js
     node objectDestructuring.js
