@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link data-senna-track="temporary" href="https://pitang.com/o/pitang-2018-theme/images/favicon.ico" rel="Shortcut Icon">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<title>Workers</title>
+</head>
+
+<body class="bg-dark">
+	<div class="container">
+		<br>
+
+		<section>
+			<div id="wwCard" class="card">
+				<div class="card-body">
+					<h5 class="card-title">Web Worker</h5>
+					<p class="card-text bg-light border rounded p-1"><small>> ...</small></p>
+					<button type="button" class="card-link btn btn-link btn-sm try">Try</button>
+					<button type="button" class="card-link btn btn-link btn-sm run">Run</button>
+					<button type="button" class="card-link btn btn-link btn-sm stop">Stop</button>
+				</div>
+			</div>
+		</section>
+
+		<hr>
+
+		<section>
+			<div id="swwCard" class="card">
+				<div class="card-body">
+					<h5 class="card-title">Shared Worker</h5>
+					<p class="card-text bg-light border rounded p-1"><small>> ...</small></p>
+					<button type="button" class="card-link btn btn-link btn-sm run">Connect</button>
+					<button type="button" class="card-link btn btn-link btn-sm stop">Stop</button>
+				</div>
+			</div>
+		</section>
+
+		<hr>
+
+		<section>
+			<div id="swCard" class="card">
+				<div class="card-body">
+					<h5 class="card-title">Service Worker</h5>
+					<p class="card-text bg-light border rounded p-1"><small>> ...</small></p>
+					<div class="row">
+						<div class="col-6 offset-3 text-center">
+							<div class="input-group">
+								<input type="text" class="form-control form-control-sm" placeholder="Image url">
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary btn-sm load" type="button">Load</button>
+								</div>
+							</div>
+							<br>
+							<img src="https://via.placeholder.com/150" class="img-thumbnail" height="150" width="150">
+						</div>
+					</div>
+					<button type="button" class="card-link btn btn-link btn-sm run">Run</button>
+					<button type="button" class="card-link btn btn-link btn-sm stop">Stop</button>
+				</div>
+			</div>
+		</section>
+
+		<hr>
+
+		<section>
+			<style>
+				.worklet { background-image: paint(worklet-bg); }
+			</style>
+			<div id="wCard" class="card">
+				<div class="card-body">
+					<h5 class="card-title">Worklet</h5>
+					<div class="row">
+						<div class="square col-6 offset-3 text-center border border-secondary py-5">
+						</div>
+					</div>
+					<button type="button" class="card-link btn btn-link btn-sm">Run</button>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- hs . -c-1 -->
+	<script src="./index.js"></script>
+</body>
+
+</html>
