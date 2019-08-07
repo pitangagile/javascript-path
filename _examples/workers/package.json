@@ -1,0 +1,15 @@
+{
+  "name": "workers",
+  "version": "1.0.0",
+  "description": "Quando falamos em Workers no javascript, estamos nos referindo as API **Web Worker**, **Shared Worker**, **Service Worker** e **Worklet**.",
+  "main": "index.js",
+  "scripts": {
+    "start": "hs . -c-1 -s -g -p 3000 -o http://localhost:3000/index2.html"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "^0.11.1",
+    "reveal.js": "^3.8.0"
+  }
+}
