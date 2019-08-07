@@ -1,15 +1,20 @@
+/**
+ * Evento disparado na instalação do worker
+ */
 self.oninstall = (e) => {
-	// self.skipWaiting();
+	// ...
 };
 
-// Chamado quando o service worker for ativado
+/**
+ * Evento disparado quando o worker estiver pronto para controlar os clientes
+ */
 self.onactivate = (e) => {
-	// Força o controle na página atual sem necessitar de refresh
-	// see: https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#clientsclaim
-	self.clients.claim();
+	// ...
 };
 
-// Ouve as requisições do documento principal
+/**
+ * Evento disparado sempre que houver uma requisição
+ */
 self.onfetch = (e) => {
 	if(e.request.destination === 'image'){
 		e.respondWith(fetch('https://i.imgur.com/i56443n.png'));

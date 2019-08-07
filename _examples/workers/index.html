@@ -5,85 +5,356 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Workers - Javascript</title>
+
 	<link data-senna-track="temporary" href="https://pitang.com/o/pitang-2018-theme/images/favicon.ico" rel="Shortcut Icon">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<title>Workers</title>
+	<link rel="stylesheet" href="./node_modules/reveal.js/css/reveal.css">
+	<link rel="stylesheet" href="./node_modules/reveal.js/css/theme/black.css">
+	<link rel="stylesheet" href="./node_modules/reveal.js/lib/css/monokai.css">
+
+	<style>
+		small { vertical-align: middle !important; font-size: 0.4em !important;}
+		.example { background: #fff; padding: 10px 0;height: 50vh;border-radius: .25rem;}
+		.example h5 {color: #000;}
+		.example .console { background-color: #f8f9fa; border: 1px solid #dee2e6!important; border-radius: .25rem; color: #212529; margin: 10px; text-align: left; padding: 0 10px; font-size: 12pt; line-height: 2rem; }
+		.example .console small { font-size: 0.6em !important; }
+		.example .btn { font-weight: 400; color: #007bff; text-decoration: none; border: none; cursor: pointer; padding: 10px 20px; background: none; }
+		.example .url { border: 1px solid #dee2e6; border-radius: .25rem; padding: 5px; width: 30vw;}
+		.example .square { background-image: paint(worklet-bg); border: 1px solid #dee2e6!important; border-radius: .25rem; height: 200px; width: 200px; margin: 0 auto; --text: https://github.com/pitangagile/javascript-path}
+	</style>
 </head>
 
-<body class="bg-dark">
-	<div class="container">
-		<br>
+<body>
 
-		<section>
-			<div id="wwCard" class="card">
-				<div class="card-body">
-					<h5 class="card-title">Web Worker</h5>
-					<p class="card-text bg-light border rounded p-1"><small>> ...</small></p>
-					<button type="button" class="card-link btn btn-link btn-sm try">Try</button>
-					<button type="button" class="card-link btn btn-link btn-sm run">Run</button>
-					<button type="button" class="card-link btn btn-link btn-sm stop">Stop</button>
-				</div>
-			</div>
-		</section>
+	<div class="reveal">
+		<div class="slides">
+			<!-- Home -->
+			<section>
+				<h3>Workers - Javascript</h3>
+				<ul>
+					<li class="fragment fade-up"><small><em>(Dedicated)</em></small> Worker</li>
+					<li class="fragment fade-up">Shared Worker</li>
+					<li class="fragment fade-up">Service Worker</li>
+					<li class="fragment fade-up">Worklet</li>
+				</ul>
+			</section>
 
-		<hr>
+			<!-- Workers -->
+			<section>
+				<h3>Nota<br><small><em>(Node.js)</em></small></h3>
+				<blockquote class="fragment fade">
+					<ul>
+						<li>Worker Thread</li>
+						<li class="fragment fade-up">Child Process</li>
+						<li class="fragment fade-up">Cluster</li>
+					</ul>
+				</blockquote>
+			</section>
 
-		<section>
-			<div id="swwCard" class="card">
-				<div class="card-body">
-					<h5 class="card-title">Shared Worker</h5>
-					<p class="card-text bg-light border rounded p-1"><small>> ...</small></p>
-					<button type="button" class="card-link btn btn-link btn-sm run">Connect</button>
-					<button type="button" class="card-link btn btn-link btn-sm stop">Stop</button>
-				</div>
-			</div>
-		</section>
+			<!-- Worker -->
+			<section>
+				<section>
+					<h3><small><em>(Dedicated)</em></small> Worker</h3>
+				</section>
 
-		<hr>
-
-		<section>
-			<div id="swCard" class="card">
-				<div class="card-body">
-					<h5 class="card-title">Service Worker</h5>
-					<p class="card-text bg-light border rounded p-1"><small>> ...</small></p>
-					<div class="row">
-						<div class="col-6 offset-3 text-center">
-							<div class="input-group">
-								<input type="text" class="form-control form-control-sm" placeholder="Image url">
-								<div class="input-group-append">
-									<button class="btn btn-outline-secondary btn-sm load" type="button">Load</button>
-								</div>
-							</div>
-							<br>
-							<img src="https://via.placeholder.com/150" class="img-thumbnail" height="150" width="150">
-						</div>
+				<section>
+					<div id="dwCard" class="example">
+							<h5><small>(dedicated)</small> Worker - Demo</h5>
+						<div class="console"><small>&gt; ...</small></div>
+						<button type="button" class="btn try">Try</button>
+						<button type="button" class="btn run">Run</button>
+						<button type="button" class="btn scope">Scope Test</button>
+						<button type="button" class="btn stop">Stop</button>
+						<button type="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
 					</div>
-					<button type="button" class="card-link btn btn-link btn-sm run">Run</button>
-					<button type="button" class="card-link btn btn-link btn-sm stop">Stop</button>
-				</div>
-			</div>
-		</section>
+				</section>
 
-		<hr>
+				<section>
+					<pre style="box-shadow: none;">
+						<code class="hljs">/* app.js */
 
-		<section>
-			<style>
-				.worklet { background-image: paint(worklet-bg); }
-			</style>
-			<div id="wCard" class="card">
-				<div class="card-body">
-					<h5 class="card-title">Worklet</h5>
-					<div class="row">
-						<div class="square col-6 offset-3 text-center border border-secondary py-5">
-						</div>
+const worker = new Worker('worker.js');</code><code class="fragment fade-up hljs">
+worker.postMessage('Hey, worker!');</code><code class="fragment fade-up hljs">
+$calculate.onclick = (e) => {
+  worker.postMessage({"action": "calculate", "fibonacciN": 42});
+}</code><code class="fragment fade-up hljs">
+worker.onmessage = ({data}) => {
+  console.info(`[Main] worker.onmessage: ${data}`);
+}
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<pre style="box-shadow: none;">
+						<code class="hljs">/* worker.js */
+
+function calculate(n) {
+  const result = fibonacci(n);
+
+  self.postMessage(`Concluído: ${result}`);
+}</code><code class="fragment fade-up hljs">
+self.onmessage = ({data}) => {
+  if(data.action === 'calculate' && data.fibonacciN) {
+    calculate(data.fibonacciN);
+  }
+}
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<pre style="box-shadow: none;">
+						<code class="hljs">/* app.js */
+
+/* ... */
+
+$stop.onclick = (e) => {
+  webWorker.terminate();
+}
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h5>Debugging<br><small><em>(Chrome)</em></small></h5>
+					<img src="https://i.postimg.cc/PqrpwqXN/worker.jpg">
+				</section>
+			</section>
+
+			<!-- Shared Worker -->
+			<section>
+				<section>
+					<h3>Shared Worker</h3>
+				</section>
+
+				<section>
+					<div id="swwCard" class="example">
+						<h5>Shared Worker - Demo</h5>
+						<div class="console"><small>&gt; ...</small></div>
+						<button type="button" class="btn run">Run</button>
+						<button type="button" class="btn scope">Scope Test</button>
+						<button type="button" class="btn stop">Stop</button>
+						<button type="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
 					</div>
-					<button type="button" class="card-link btn btn-link btn-sm">Run</button>
-				</div>
-			</div>
-		</section>
+				</section>
+
+				<section>
+					<pre style="box-shadow: none;">
+						<code class="hljs">/* app.js */
+
+const sharedWorker = new SharedWorker('./shared_worker.js');</code><code class="fragment fade-up hljs">
+const workerProxyPort = sharedWorker.port;</code><code class="fragment fade-up hljs">
+workerProxyPort.postMessage('Hey Worker!');</code><code class="fragment fade-up hljs">
+workerProxyPort.postMessage({
+  "action": "calculate",
+  "fibonacciN": 42
+});
+</code><code class="fragment fade-up hljs">
+workerProxyPort.onmessage = ({data}) => {
+  console.log(`[Main] sharedWorker.port.onmessage: ${data}`);
+}</code>
+					</pre>
+				</section>
+				<section>
+						<pre style="box-shadow: none;">
+							<code class="hljs">/* shared_worker.js */
+
+self.onconnect = function({ports}) {</code><code class="fragment fade-up hljs">
+  // a porta de comunicação sempre será a "0"
+  const port = ports[0];</code><code class="fragment fade-up hljs">
+  port.onmessage = ({data}) => {
+    console.info(`[Worker] worker.port.onmessage: ${data}`)
+  }</code><code class="fragment fade-up hljs">
+  port.postMessage('[Worker] Iniciado');
+}
+	</code>
+						</pre>
+					</section>
+					<section>
+						<pre style="box-shadow: none;">
+							<code class="hljs">/* app.js */
+
+/* ... */
+
+$stop.onclick = (e) => {
+  sharedWorker.port.close();
+}
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h5>Debugging<br><small><em>(Chrome)</em></small></h5>
+						<img src="https://i.postimg.cc/g2qW7jjs/shared-worker.jpg">
+					</section>
+			</section>
+
+			<!-- Service Worker -->
+			<section>
+				<section>
+					<h3>Service Worker</h3>
+				</section>
+
+				<section>
+					<div id="swCard" class="example">
+						<h5>Shared Worker - Demo</h5>
+						<div class="console"><small>&gt; ...</small></div>
+						<input type="text" class="url" placeholder="Image url">
+						<br>
+						<img src="https://via.placeholder.com/150" class="img" height="150" width="150">
+						<br>
+						<button type="button" class="btn load">Load</button>
+						<button type="button" class="btn run">Run</button>
+						<button type="button" class="btn stop">Stop</button>
+					</div>
+				</section>
+
+				<section>
+					<pre style="box-shadow: none;">
+						<code class="hljs">/* app.js */
+
+navigator.serviceWorker.register('./service_worker.js');
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<pre style="box-shadow: none;">
+						<code class="hljs">/* service_worker.js */
+
+self.oninstall = (e) => { };</code><code class="fragment fade-up hljs">
+self.onactivate = (e) => { };</code><code class="fragment fade-up hljs">
+self.onfetch = (e) => {
+  e.respondWith(fetch('https://...'));
+};
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<pre style="box-shadow: none;">
+						<code class="hljs">/* app.js */
+
+navigator.serviceWorker.getRegistrations()
+.then(function (registrations) {
+  for (let registration of registrations) {
+    registration.unregister();
+  }
+});
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h5>Debugging<br><small><em>(Chrome)</em></small></h5>
+					<img src="https://i.postimg.cc/7Lzyg0hb/service-worker.jpg">
+				</section>
+			</section>
+
+			<!-- Worklet -->
+			<section>
+				<section>
+					<h3>Worklet</h3>
+				</section>
+
+				<section>
+					<h3>Tipos</h3>
+					<ul>
+						<li class="fragment fade-up">LayoutWorklet</li>
+						<li class="fragment fade-up">PaintWorklet</li>
+						<li class="fragment fade-up">AudioWorklet</li>
+						<li class="fragment fade-up">AnimationWorklet</li>
+					</ul>
+				</section>
+
+				<section>
+					<div id="wCard" class="example">
+						<h5>Worklet: PaintWorklet - Demo</h5>
+						<div class="square"></div>
+						<button type="button" class="btn run">Run</button>
+					</div>
+				</section>
+
+				<section>
+					<pre style="box-shadow: none;">
+						<code class="hljs">/* app.js */
+
+CSS.paintWorklet.addModule('worklet.js');
+						</code>
+					</pre>
+				</section>
+				<section>
+					<pre style="box-shadow: none;">
+						<code class="hljs js">/* worklet.js */
+
+class WorkletBG {
+  paint(ctx, geom, props) {
+    // ...
+  }
+}</code><code class="fragment fade-up hljs">
+registerPaint('worklet-bg', WorkletBG);
+</code>
+					</pre>
+				</section>
+				<section>
+						<pre style="box-shadow: none;">
+							<code class="hljs css">/* index.css */
+
+.custom-br {
+  background-image: paint(worklet-bg);
+}</code><code class="fragment fade-up hljs html">
+<!-- index.html -->
+
+<div class="custom-br"></div>
+</code>
+						</pre>
+					</section>
+
+					<section>
+						<h5>Debugging</h5>
+						<h1 class="fragment fade-up">?</h1>
+					</section>
+			</section>
+
+			<!-- Recapitulando -->
+			<section>
+				<h3>Recapitulando</h3>
+				<ul>
+					<li class="fragment fade-up"><small><em>(Dedicated)</em></small> Worker</li>
+					<li class="fragment fade-up">Shared Worker</li>
+					<li class="fragment fade-up">Service Worker</li>
+					<li class="fragment fade-up">Worklet</li>
+				</ul>
+			</section>
+
+			<!-- Referencias -->
+			<section>
+				<h3>Referências</h3>
+				<ul class="fragment fade-up" style="font-size: 16pt">
+						<li>- https://developer.mozilla.org/en-US/docs/Web/API/Worker</li>
+						<li>- https://developer.mozilla.org/en-US/docs/Web/API/-SharedWorker</li>
+						<li>- https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker</li>
+						<li>- https://developer.mozilla.org/en-US/docs/Web/API/Worklet</li>
+						<li>- https://developers.google.com/web/fundamentals/performance/rendering<hr></li>
+						<li class="fragment fade-up">- https://github.com/GoogleChromeLabs/houdini-samples</li>
+						<li class="fragment fade-up">- https://squoosh.app/</li>
+					</ul>
+			</section>
+
+			<!-- Duvidas? -->
+			<section>
+					<h3>Dúvida<br>ou<br>Colaboração?</h3>
+			</section>
+
+			<!-- Claps  -->
+			<section data-background-image="https://media.giphy.com/media/xTiTnk7cRvop40CYLu/giphy.gif">
+				<h1 class="fragment fade-up" style="text-shadow: 2px 2px #ff1a9b, 4px 4px #f7ea20, 6px 6px #00FD76;">Valeu!</h1>
+			</section>
+		</div>
 	</div>
 
-	<!-- hs . -c-1 -->
+	<script src="./node_modules/reveal.js/js/reveal.js"></script>
 	<script src="./index.js"></script>
 </body>
 

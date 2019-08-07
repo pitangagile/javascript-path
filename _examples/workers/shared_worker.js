@@ -1,22 +1,28 @@
-let peers = [],
-	counter = 0,
-	interval;
+const f = (num) => (num <= 1) ? 1 : f(num - 1) + f(num - 2);
+let peers = [], counter = 0;
 
-this.onconnect = function({ports}) {
+function calculate(n, message) {
+  const result = f(n);
+
+	if (message) postMessageToAll(message);
+	else postMessageToAll(`Concluído: ${result}`);
+}
+
+self.onconnect = function({ports}) {
+	// a porta de comunicação sempre será a "0"
 	const port = ports[0];
-
+	// guarda a porta de comunicação
 	peers.push(port);
 
-	// Para mostrar que o contexto é compartilhado
-	if(!interval){
-		interval = setInterval(() => {
-			postMessageToAll(`${++counter}`);
-
-			if(counter == 20) {
-				counter = 0;
-				clearInterval(interval);
-			}
-		}, 1000);
+	port.onmessage = ({data}) => {
+		if(data.action === 'calculate' && data.fibonacciN) {
+			calculate(data.fibonacciN);
+		}
+		else if(data.action === 'scope-test' && data.fibonacciN) {
+			while(++counter <= 10) calculate(data.fibonacciN, `Counter ${counter}`);
+			counter = 0;
+			postMessageToAll("Terminou!");
+		}
 	}
 }
 

@@ -1,129 +1,137 @@
-(function (d, w) {
+(function(d, w){
 	// #region Snippets
 	const $ = (s, n = d) => n.querySelector(s);
 	const $$ = (s, n = d) => [...n.querySelectorAll(s)];
 	const f = (num) => (num <= 1) ? 1 : f(num - 1) + f(num - 2);
 	// #endregion Snippets
 
-	// #region Web Worker
-	const wwPanel = $('#wwCard .card-text small');
-	const wwRun = $('#wwCard .btn.run');
-	const wwTry = $('#wwCard .btn.try');
-	const wwStop = $('#wwCard .btn.stop');
-
-	let webWorker = new Worker('./worker.js');
-
-	wwTry.addEventListener('click', (e) => {
-		f(42);
-		wwPanel.innerText = `> Finalmente...`;
+	// #region Slide
+	w.Reveal.initialize({
+		dependencies: [
+			{ src: 'node_modules/reveal.js/plugin/highlight/highlight.js', async: true },
+			{ src: 'node_modules/reveal.js/plugin/search/search.js', async: true },
+			{ src: 'node_modules/reveal.js/plugin/zoom-js/zoom.js', async: true },
+			{ src: 'node_modules/reveal.js/plugin/notes/notes.js', async: true },
+		],
+		transition:'convex',
+		hash: true,
+		mouseWheel: true,
 	});
+	// #endregion Slide
 
-	wwRun.addEventListener('click', (e) => {
-		if (webWorker) {
-			webWorker.postMessage('Go!');
-			wwPanel.innerHTML = `> ${new Date().toISOString()} <strong>Iniciou</strong>`;
-		}
-	});
+	// #region Dedicated Worker
+	const dwConsole = $('#dwCard .console small');
+	const dwRun = $('#dwCard .btn.run');
+	const dwTry = $('#dwCard .btn.try');
+	const dwScope = $('#dwCard .btn.scope');
+	const dwStop = $('#dwCard .btn.stop');
 
-	wwStop.addEventListener('click', (e) => {
-		if (webWorker) {
-			webWorker.terminate();
-			webWorker = undefined;
-		}
-	});
+	let dedicatedWorker = new Worker('./worker.js');
 
-	webWorker.onmessage = ({
-		data
-	}) => {
-		wwPanel.innerHTML += `<br>> ${new Date().toISOString()} <strong>${data}</strong>`;
+	dedicatedWorker.onmessage = ({data}) => {
+		dwConsole.innerHTML += `<br>> ${new Date().toISOString()} <strong>${data}</strong>`;
 	}
-	// #endregion Web Worker
+
+	dwTry.addEventListener('click', (e) => {
+		f(42);
+		dwConsole.innerHTML = `> ${new Date().toISOString()} <strong>Finalmente...</strong>`;
+	});
+
+	dwRun.addEventListener('click', (e) => {
+		if (!dedicatedWorker) {
+			dwConsole.innerHTML = `> ${new Date().toISOString()} <strong>Worker já finalizado...</strong>`;
+		} else {
+			dwConsole.innerHTML = `> ${new Date().toISOString()} <strong>Iniciou</strong>`;
+			dedicatedWorker.postMessage({"action": "calculate", "fibonacciN": 42});
+		}
+	});
+
+	dwScope.addEventListener('click', (e) => {
+		if (!dedicatedWorker) {
+			dwConsole.innerHTML = `> ${new Date().toISOString()} <strong>Worker já finalizado...</strong>`;
+		} else {
+			dwConsole.innerHTML = `> ${new Date().toISOString()} <strong>Iniciou</strong>`;
+			dedicatedWorker.postMessage({"action": "scope-test", "fibonacciN": 42});
+		}
+	});
+
+	dwStop.addEventListener('click', (e) => {
+		if (dedicatedWorker) {
+			dedicatedWorker.terminate();
+			dedicatedWorker = undefined;
+			dwConsole.innerHTML = `> ${new Date().toISOString()} <strong>Finalizou</strong>`;
+		}
+	});
+	// #endregion Dedicated Worker
 
 	// #region Shared Worker
-	if (!!window.SharedWorker) {
-		const swwPanel = $('#swwCard .card-text small');
-		const swwRun = $('#swwCard .btn.run');
-		const swwStop = $('#swwCard .btn.stop');
+	const swwConsole = $('#swwCard .console small');
+	const swwRun = $('#swwCard .btn.run');
+	const swwScope = $('#swwCard .btn.scope');
+	const swwStop = $('#swwCard .btn.stop');
+	let sharedWorker = new SharedWorker('./shared_worker.js');
 
-		let sharedWorker = undefined;
-
-		swwRun.addEventListener('click', (e) => {
-			if (!sharedWorker) {
-				sharedWorker = new SharedWorker('./shared_worker.js');
-
-				sharedWorker.port.onmessage = ({
-					data
-				}) => {
-					swwPanel.innerHTML += `<br>> ${new Date().toISOString()} <strong>${data}</strong>`;
-				}
-
-				swwPanel.innerText = '> Conectado...';
-			}
-		});
-
-		swwStop.addEventListener('click', (e) => {
-			if (sharedWorker) {
-				sharedWorker.port.close();
-				delete sharedWorker;
-			}
-		});
+	sharedWorker.port.onmessage = ({data}) => {
+		swwConsole.innerHTML += `<br>> ${new Date().toISOString()} <strong>${data}</strong>`;
 	}
+
+	swwRun.addEventListener('click', (e) => {
+		if (sharedWorker) {
+			swwConsole.innerHTML = `> ${new Date().toISOString()} <strong>Iniciou</strong>`;
+			sharedWorker.port.postMessage({"action": "calculate", "fibonacciN": 42});
+		}
+	});
+
+	swwScope.addEventListener('click', (e) => {
+		if (sharedWorker) {
+			swwConsole.innerHTML = `> ${new Date().toISOString()} <strong>Iniciou</strong>`;
+			sharedWorker.port.postMessage({"action": "scope-test", "fibonacciN": 42});
+		}
+	});
+
+	swwStop.addEventListener('click', (e) => {
+		if (sharedWorker) {
+			sharedWorker.port.close();
+			sharedWorker = undefined;
+			swwConsole.innerHTML = `> ${new Date().toISOString()} <strong>Finalizou</strong>`;
+		}
+	});
 	// #endregion Shared Worker
 
 	// #region Service Worker
-	const swPanel = $('#swCard .card-text small');
+	const swConsole = $('#swCard .console small');
+	const swUrl = $('#swCard .url');
+	const swLoad = $('#swCard .btn.load');
+	const swImg = $('#swCard .img');
 	const swRun = $('#swCard .btn.run');
 	const swStop = $('#swCard .btn.stop');
-	const swLoad = $('#swCard .btn.load');
-	const swUrl = $('#swCard input');
-	const swImg = $('#swCard img');
+
+	swLoad.addEventListener('click', (e) => { if(swUrl.value) { swImg.src = swUrl.value; } });
 
 	swRun.addEventListener('click', (e) => {
-		// Necessário recarregar a página caso o woeker se torne ativo
-		// para garantir seu funcionamento
-		navigator.serviceWorker.addEventListener('controllerchange', (e) => {
-			window.location.reload()
-		});
-
 		navigator.serviceWorker.register('./service_worker.js')
-			.then((registration) => {
-				// força uma atualização caso idetifique que o script é diferente (em caso de worker já registrado anteriorment)
-				registration.update();
-
-				swPanel.innerHTML = `> ${new Date().toISOString()} <strong>Registrado</strong>`;
-			}
-		);
+		.then((registration) => {
+			// força uma atualização caso idetifique que o script é diferente (em caso de worker já registrado anteriorment)
+			registration.update();
+			swConsole.innerHTML = `> ${new Date().toISOString()} <strong>Registrado</strong>`;
+		}
+	);
 	});
 
 	swStop.addEventListener('click', (e) => {
 		navigator.serviceWorker.getRegistrations().then(function (registrations) {
-			for (let registration of registrations) {
-				// if(registration.active.scriptURL.indexOf('/service_worker.js') >=0){
-				registration.unregister();
-				swPanel.innerHTML += `<br>> ${new Date().toISOString()} <strong>Desregistrado</strong>`;
-				window.location.reload();
-				// 	break;
-				// }
-			}
+			for (let registration of registrations) registration.unregister();
 		});
-	});
-
-	swLoad.addEventListener('click', (e) => {
-		swImg.src = swUrl.value;
+		swConsole.innerHTML = `> ${new Date().toISOString()} <strong>Desregistrado</strong>`;
 	});
 	// #endregion Service Worker
 
 	// #region Worklet
-	const wPanel = $('#wCard .card-text small');
 	const wSquare = $('#wCard .square');
-	const wButton = $('#wCard .btn');
+	const wRun = $('#wCard .btn.run');
 
-	wButton.addEventListener('click', (e) => {
-		if ('paintWorklet' in CSS) {
-			CSS.paintWorklet.addModule('worklet.js');
-
-			wSquare.classList.add('worklet');
-		}
+	wRun.addEventListener('click', (e) => {
+		CSS.paintWorklet.addModule('worklet.js');
 	});
 	// #endregion Worklet
 })(document, window);

@@ -1,25 +1,20 @@
-let counter = 0,
-	interval;
-
-this.onmessage = function({data}) {
-	console.info("[Worker] onmessage: ", data);
-
-	//simula processamento intenso
-	f(42);
-	/* Enviando mensagem para script main.js */
-	this.postMessage("Terminou!");
-
-	// Para mostrar que o contexto é dedicado
-	// if(!interval){
-	// 	interval = setInterval(() => {
-	// 		this.postMessage(`[Worker] Counter ${++counter}`);
-
-	// 		if(counter == 20) {
-	// 			counter = 0;
-	// 			clearInterval(interval);
-	// 		}
-	// 	}, 1000);
-	// }
-	}
-
 const f = (num) => (num <= 1) ? 1 : f(num - 1) + f(num - 2);
+let counter = 0;
+
+function calculate(n, message) {
+  const result = f(n);
+
+	if (message) self.postMessage(message);
+	else self.postMessage(`Concluído: ${result}`);
+}
+
+self.onmessage = ({data}) => {
+  if(data.action === 'calculate' && data.fibonacciN) {
+    calculate(data.fibonacciN);
+	}
+	else if(data.action === 'scope-test' && data.fibonacciN) {
+		while(++counter <= 10) calculate(data.fibonacciN, `Counter ${counter}`);
+		counter = 0;
+		self.postMessage("Terminou!");
+  }
+}
