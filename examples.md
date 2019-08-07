@@ -15,4 +15,4 @@ Lista de todos os exemplos do repositório
 
 ## Workers
 
-* [Exemplo de Workers](_examples/workers/README.md)
+* [Exemplo de Workers](_examples/workers/README.MD)
