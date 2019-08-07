@@ -1,4 +1,8 @@
 # Javascript Workers
+
+[Início](../../../README.md) |
+[Exemplos](../../../examples.md)
+
 Quando falamos em Workers no javascript, estamos nos referindo as API **Web Worker**, **Shared Worker**, **Service Worker** e **Worklet**.
 
 Workers nada mais são que scripts que mantém-se executando numa thread separada da thread principal do **Browser**, e, por esta característica, são úteis para executar operações que demandam uso intensivo da CPU.
