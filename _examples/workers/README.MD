@@ -167,7 +167,7 @@ div {
 
 ### Referências
 - https://developer.mozilla.org/en-US/docs/Web/API/Worker
-- https://developer.mozilla.org/en-US/docs/Web/API/-SharedWorker
+- https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker
 - https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker
 - https://developer.mozilla.org/en-US/docs/Web/API/Worklet
 - https://developers.google.com/web/fundamentals/performance/rendering/
