@@ -1,7 +1,7 @@
 # Javascript Workers
 
-[Início](../../../README.md) |
-[Exemplos](../../../examples.md)
+[Início](../../README.md) |
+[Exemplos](../../examples.md)
 
 Quando falamos em Workers no javascript, estamos nos referindo as API **Web Worker**, **Shared Worker**, **Service Worker** e **Worklet**.
 
